@@ -20,7 +20,7 @@ class libvirt::params {
       $radvd_package = 'radvd'
       $sysconfig = {}
       $deb_default = false
-      $auth_unix_ro = false
+      $auth_unix_ro = 'polkit'
       $unix_sock_rw_perms = '0770'
       $auth_unix_rw = false
       $unix_sock_group = root
@@ -32,7 +32,7 @@ class libvirt::params {
       $sysconfig = false
       $deb_default = {}
       # UNIX socket
-      $auth_unix_ro = 'none'
+      $auth_unix_ro = 'polkit'
       $unix_sock_rw_perms = '0770'
       $auth_unix_rw = 'none'
       case $facts['os']['name'] {
@@ -53,7 +53,7 @@ class libvirt::params {
       $radvd_package = 'radvd'
       $sysconfig = false
       $deb_default = false
-      $auth_unix_ro = false
+      $auth_unix_ro = 'polkit'
       $unix_sock_rw_perms = '0770'
       $auth_unix_rw = false
       $unix_sock_group = root
