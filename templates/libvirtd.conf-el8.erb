@@ -1,12 +1,6 @@
 # This file is managed by puppet - changes will be overwritten
-#
+
 # Master libvirt daemon configuration file
-#
-# For further information consult http://libvirt.org/format.html
-#
-# NOTE: the tests/daemon-conf regression test script requires
-# that each "PARAMETER = VALUE" line in this file have the parameter
-# name just after a leading "#".
 
 #################################################################
 #
@@ -14,14 +8,17 @@
 #
 
 # Flag listening for secure TLS connections on the public TCP/IP port.
-# NB, must pass the --listen flag to the libvirtd process for this to
-# have any effect.
+# To enable listening sockets with the 'libvirtd' daemon it's also required to
+# pass the '--listen' flag on the commandline of the daemon.
+# This is not needed with 'virtproxyd'.
+#
+# This setting is not required or honoured if using systemd socket
+# activation.
 #
 # It is necessary to setup a CA and issue server certificates before
 # using this capability.
 #
-# This is enabled by default, uncomment this to disable it
-#listen_tls = 0
+# This is enabled by default.
 <% if @listen_tls == true -%>
 listen_tls = 1
 <% elsif @listen_tls == false -%>
@@ -36,7 +33,7 @@ listen_tls = 0
 # SASL mechanisms which support data encryption are allowed. This is
 # DIGEST_MD5 and GSSAPI (Kerberos5)
 #
-# This is disabled by default, uncomment this to enable it.
+# This is disabled by default,
 #listen_tcp = 1
 <% if @listen_tcp == true -%>
 listen_tcp = 1
@@ -44,31 +41,23 @@ listen_tcp = 1
 listen_tcp = 0
 <% end -%>
 
-
-
-# Override the port for accepting secure TLS connections
 # This can be a port number, or service name
-#
-#tls_port = "16514"
 <% if @tls_port -%>
 tls_port = "<%= @tls_port %>"
 <% end -%>
 
-# Override the port for accepting insecure TCP connections
 # This can be a port number, or service name
-#
-#tcp_port = "16509"
 <% if @tcp_port -%>
 tcp_port = "<%= @tcp_port %>"
 <% end -%>
 
-
 # Override the default configuration which binds to all network
 # interfaces. This can be a numeric IPv4/6 address, or hostname
 #
-#listen_addr = "192.168.0.1"
 <% if @listen_addr -%>
 listen_addr = "<%= @listen_addr %>"
+<% else -%>
+#listen_addr = "192.168.0.1"
 <% end -%>
 
 
@@ -78,9 +67,10 @@ listen_addr = "<%= @listen_addr %>"
 # stopping the Avahi daemon
 #
 # This is enabled by default, uncomment this to disable it
-#mdns_adv = 0
 <% if @mdns_adv == false or @mdns_adv == '0' -%>
 mdns_adv = 0
+<% else -%>
+#mdns_adv = 0
 <% end -%>
 
 # Override the default mDNS advertizement name. This must be
@@ -89,7 +79,7 @@ mdns_adv = 0
 # The default is "Virtualization Host HOSTNAME", where HOSTNAME
 # is subsituted for the short hostname of the machine (without domain)
 #
-#mdns_name = "Virtualization Host Joe Demo"
+mdns_name = "<%= @mdns_name %>"
 
 
 #################################################################
@@ -102,20 +92,14 @@ mdns_adv = 0
 # without becoming root.
 #
 # This is restricted to 'root' by default.
-#unix_sock_group = "libvirt"
-<% if @unix_sock_group -%>
 unix_sock_group = "<%= @unix_sock_group %>"
-<% end -%>
 
 # Set the UNIX socket permissions for the R/O socket. This is used
 # for monitoring VM status only
 #
 # Default allows any user. If setting group ownership may want to
 # restrict this to:
-#unix_sock_ro_perms = "0777"
-<% if @unix_sock_ro_perms -%>
 unix_sock_ro_perms = "<%= @unix_sock_ro_perms %>"
-<% end -%>
 
 # Set the UNIX socket permissions for the R/W socket. This is used
 # for full management of VMs
@@ -125,16 +109,10 @@ unix_sock_ro_perms = "<%= @unix_sock_ro_perms %>"
 #
 # If not using PolicyKit and setting group ownership for access
 # control then you may want to relax this to:
-#unix_sock_rw_perms = "0770"
-<% if @unix_sock_rw_perms -%>
 unix_sock_rw_perms = "<%= @unix_sock_rw_perms %>"
-<% end -%>
 
 # Set the name of the directory in which sockets will be found/created.
-#unix_sock_dir = "/var/run/libvirt"
-<% if @unix_sock_dir -%>
 unix_sock_dir = "<%= @unix_sock_dir %>"
-<% end -%>
 
 #################################################################
 #
@@ -162,10 +140,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 #
 # To restrict monitoring of domains you may wish to enable
 # an authentication mechanism here
-#auth_unix_ro = "none"
-<%- if @auth_unix_ro -%>
 auth_unix_ro = "<%= @auth_unix_ro %>"
-<%- end -%>
 
 # Set an authentication scheme for UNIX read-write sockets
 # By default socket permissions only allow root. If PolicyKit
@@ -174,10 +149,7 @@ auth_unix_ro = "<%= @auth_unix_ro %>"
 #
 # If the unix_sock_rw_perms are changed you may wish to enable
 # an authentication mechanism here
-#auth_unix_rw = "none"
-<%- if @auth_unix_rw -%>
 auth_unix_rw = "<%= @auth_unix_rw %>"
-<%- end -%>
 
 # Change the authentication scheme for TCP sockets.
 #
@@ -185,10 +157,7 @@ auth_unix_rw = "<%= @auth_unix_rw %>"
 # Don't do this outside of a dev/test scenario. For real world
 # use, always enable SASL and use the GSSAPI or DIGEST-MD5
 # mechanism in /etc/sasl2/libvirt.conf
-#auth_tcp = "sasl"
-<% if @auth_tcp -%>
 auth_tcp = "<%= @auth_tcp %>"
-<% end -%>
 
 # Change the authentication scheme for TLS sockets.
 #
@@ -197,11 +166,21 @@ auth_tcp = "<%= @auth_tcp %>"
 #
 # It is possible to make use of any SASL authentication
 # mechanism as well, by using 'sasl' for this option
-#auth_tls = "none"
-<% if @auth_tls -%>
 auth_tls = "<%= @auth_tls %>"
-<% end -%>
 
+# This option can be used to set values higher than defaut 112
+tcp_min_ssf = "<%= @tcp_min_ssf %>"
+
+
+# Change the API access control scheme
+#
+# By default an authenticated user is allowed access
+# to all APIs. Access drivers can place restrictions
+# on this. By default the 'nop' driver is enabled,
+# meaning no access control checks are done once a
+# client has authenticated with libvirtd
+# target option is polkit
+access_drivers = [ "<%= @access_drivers %>" ]
 
 
 #################################################################
