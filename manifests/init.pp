@@ -49,7 +49,7 @@ class libvirt (
   $auth_unix_rw              = $::libvirt::params::auth_unix_rw,
   $tcp_min_ssf               = '112',
   $unix_sock_dir             = '/run/libvirt',
-  $access_drivers            = 'nop',
+  $access_drivers            = 'no-op',
   # qemu.conf options
   $qemu_vnc_listen           = undef,
   $qemu_vnc_sasl             = undef,
