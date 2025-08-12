@@ -39,6 +39,7 @@ class libvirt (
   $tcp_port                  = 16509,
   $listen_addr               = undef,
   $mdns_adv                  = undef,
+  $mdns_name                 = $::libvirt::params::mdns_name,
   $auth_tcp                  = undef,
   $auth_tls                  = undef,
   $unix_sock_group           = $::libvirt::params::unix_sock_group,

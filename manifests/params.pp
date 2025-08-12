@@ -57,6 +57,7 @@ class libvirt::params {
       $unix_sock_rw_perms = false
       $auth_unix_rw = false
       $unix_sock_group = false
+      $mdns_name = "${facts['fqdn']} libvirt hypervisor"
     }
   }
 
