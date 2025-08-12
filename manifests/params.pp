@@ -23,7 +23,7 @@ class libvirt::params {
       $auth_unix_ro = false
       $unix_sock_rw_perms = false
       $auth_unix_rw = false
-      $unix_sock_group = false
+      $unix_sock_group = root
     }
     'Debian': {
       $libvirt_package = 'libvirt-bin'
@@ -56,7 +56,7 @@ class libvirt::params {
       $auth_unix_ro = false
       $unix_sock_rw_perms = false
       $auth_unix_rw = false
-      $unix_sock_group = false
+      $unix_sock_group = root
     }
   }
 
