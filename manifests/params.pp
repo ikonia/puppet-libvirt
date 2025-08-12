@@ -21,7 +21,7 @@ class libvirt::params {
       $sysconfig = {}
       $deb_default = false
       $auth_unix_ro = false
-      $unix_sock_rw_perms = false
+      $unix_sock_rw_perms = '0770'
       $auth_unix_rw = false
       $unix_sock_group = root
     }
@@ -54,7 +54,7 @@ class libvirt::params {
       $sysconfig = false
       $deb_default = false
       $auth_unix_ro = false
-      $unix_sock_rw_perms = false
+      $unix_sock_rw_perms = '0770'
       $auth_unix_rw = false
       $unix_sock_group = root
     }
