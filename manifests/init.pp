@@ -35,8 +35,8 @@ class libvirt (
   # libvirtd.conf options
   $listen_tls                = true,
   $listen_tcp                = false,
-  $tls_port                  = undef,
-  $tcp_port                  = undef,
+  $tls_port                  = 16514,
+  $tcp_port                  = 16509,
   $listen_addr               = undef,
   $mdns_adv                  = undef,
   $auth_tcp                  = undef,
