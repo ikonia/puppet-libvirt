@@ -33,8 +33,8 @@ class libvirt (
   $sysconfig                 = $::libvirt::params::sysconfig,
   $deb_default               = $::libvirt::params::deb_default,
   # libvirtd.conf options
-  $listen_tls                = undef,
-  $listen_tcp                = undef,
+  $listen_tls                = true,
+  $listen_tcp                = false,
   $tls_port                  = undef,
   $tcp_port                  = undef,
   $listen_addr               = undef,
