@@ -34,7 +34,6 @@ listen_tls = 0
 # DIGEST_MD5 and GSSAPI (Kerberos5)
 #
 # This is disabled by default,
-#listen_tcp = 1
 <% if @listen_tcp == true -%>
 listen_tcp = 1
 <% elsif @listen_tcp == false -%>
