@@ -178,8 +178,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 #
 # To restrict monitoring of domains you may wish to either
 # enable 'sasl' here, or change the polkit policy definition.
-#auth_unix_ro = "polkit"
-
+auth_unix_ro = "<%= @auth_unix_ro %>"
 # Set an authentication scheme for UNIX read-write sockets.
 #
 # If libvirt was compiled without support for 'polkit', then
@@ -194,7 +193,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # is essential to change the systemd SocketMode parameter
 # back to 0600, to avoid an insecure configuration.
 #
-#auth_unix_rw = "polkit"
+auth_unix_rw = "<%= @auth_unix_rw %>"
 
 # Change the authentication scheme for TCP sockets.
 #
@@ -202,7 +201,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # Don't do this outside of a dev/test scenario. For real world
 # use, always enable SASL and use the GSSAPI or DIGEST-MD5
 # mechanism in /etc/sasl2/libvirt.conf
-#auth_tcp = "sasl"
+auth_tcp = "<%= @auth_tcp %>"
 
 # Change the authentication scheme for TLS sockets.
 #
@@ -211,7 +210,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 #
 # It is possible to make use of any SASL authentication
 # mechanism as well, by using 'sasl' for this option
-#auth_tls = "none"
+auth_tls = "<%= @auth_tls %>"
 
 # Enforce a minimum SSF value for TCP sockets
 #
@@ -219,7 +218,8 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # be raised to 112 in the future.
 #
 # This option can be used to set values higher than 112
-#tcp_min_ssf = 112
+tcp_min_ssf = <%= @tcp_min_ssf %>
+
 
 
 # Change the API access control scheme
@@ -230,8 +230,12 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # meaning no access control checks are done once a
 # client has authenticated with virtproxyd
 #
-#access_drivers = [ "polkit" ]
+# target should be set to polkit
+access_drivers = [ "<%= @access_drivers %>" ]
 
+
+# No puppet parameters are available from here - future releases target
+#
 #################################################################
 #
 # TLS x509 certificate configuration
