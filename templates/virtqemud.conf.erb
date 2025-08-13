@@ -100,7 +100,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 #
 # To restrict monitoring of domains you may wish to either
 # enable 'sasl' here, or change the polkit policy definition.
-#auth_unix_ro = "polkit"
+auth_unix_ro = "<%= @auth_unix_ro %>"
 
 # Set an authentication scheme for UNIX read-write sockets.
 #
@@ -116,8 +116,7 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # is essential to change the systemd SocketMode parameter
 # back to 0600, to avoid an insecure configuration.
 #
-#auth_unix_rw = "polkit"
-
+auth_unix_rw = "<%= @auth_unix_rw %>"
 
 # Change the API access control scheme
 #
@@ -127,8 +126,10 @@ unix_sock_dir = "<%= @unix_sock_dir %>"
 # meaning no access control checks are done once a
 # client has authenticated with virtqemud
 #
-#access_drivers = [ "polkit" ]
+access_drivers = [ "<%= @access_drivers %>" ]
 
+
+# no puppet parameters are beyond this line - future releases will enable
 #################################################################
 #
 # Authorization controls
