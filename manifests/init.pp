@@ -50,6 +50,7 @@ class libvirt (
   $tcp_min_ssf               = '112',
   $unix_sock_dir             = '/run/libvirt',
   $access_drivers            = 'no-op',
+  $enable_libirtproxy        = false,
   # qemu.conf options
   $qemu_vnc_listen           = '127.0.0.1',
   $qemu_vnc_sasl             = undef,
